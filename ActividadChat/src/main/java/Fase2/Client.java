@@ -8,47 +8,37 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) {
-        //host del servidor
+
         final String HOST = "127.0.0.1";
-        //puerto del servidor
         final int PUERTO = 5000;
 
-        DataInputStream in = null;
-        DataOutputStream out = null;
+        try (
+                Socket sc = new Socket(HOST, PUERTO);
+                DataInputStream in = new DataInputStream(sc.getInputStream());
+                DataOutputStream out = new DataOutputStream(sc.getOutputStream());
+                Scanner teclado = new Scanner(System.in)
+        ) {
+            System.out.println("Conectado al servidor.");
 
-        Socket sc;
+            boolean salir = false;
 
-        {
-            try {
-                sc = new Socket(HOST, PUERTO);
+            while (!salir) {
+                System.out.print("Escribe un mensaje (FIN para salir): ");
+                String mensajeEnviar = teclado.nextLine();
+                out.writeUTF(mensajeEnviar);
 
-                in = new DataInputStream(sc.getInputStream()); // Flujo de entrada
-                out = new DataOutputStream(sc.getOutputStream()); // Flujo de salida
-
-                Scanner teclado= new Scanner(System.in);
-
-                System.out.println("Conectado al servidor.");
-                boolean salir = false;
-
-
-                while(!salir){
-                    System.out.println("Escribe un mensaje para el servidor (escribe 'FIN' para salir): ");
-                    String mensajeEnviar = teclado.nextLine();
-                    out.writeUTF(mensajeEnviar); // Envía un mensaje al servidor
-
-                    String mensajeRecibido = in.readUTF(); // Lee el mensaje enviado por el servidor
-                    System.out.println("Mensaje recibido del servidor: " + mensajeRecibido); // Muestra el mensaje
-
-                    if (mensajeEnviar.equalsIgnoreCase("FIN")) {
-                        salir = true;
-                    }
+                if (mensajeEnviar.equalsIgnoreCase("FIN")) {
+                    salir = true;
+                } else {
+                    String respuesta = in.readUTF();
+                    System.out.println("Servidor: " + respuesta);
                 }
-
-                sc.close(); // Cierra el socket
-                System.out.println("Socket terminado"); // Mensaje de desconexión
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
+
+            System.out.println("Cliente desconectado.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,9 +1,11 @@
-package Fase3;
+package Fase4;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class GestorCliente implements Runnable {
 
@@ -12,7 +14,7 @@ public class GestorCliente implements Runnable {
     }
 
     private Socket sc;
-    private String idCliente;
+    private String idCliente = "(sin nombre) - ";
 
     public GestorCliente(Socket sc){
         this.sc = sc;
@@ -20,23 +22,19 @@ public class GestorCliente implements Runnable {
 
     @Override
     public void run(){
-        DataInputStream in = null;
-        DataOutputStream out = null;
+        try (DataInputStream in = new DataInputStream(sc.getInputStream());
+             DataOutputStream out = new DataOutputStream(sc.getOutputStream())) {
 
-        try {
-            in = new DataInputStream(sc.getInputStream());
-            out = new DataOutputStream(sc.getOutputStream());
-
-            // 🔹 RECIBIR NOMBRE DEL CLIENTE
+            // 🔹 Recibir nombre del cliente
             String nombreCliente = in.readUTF();
             this.idCliente = nombreCliente + " - ";
 
-            boolean salir = false;
-
             log("Cliente " + idCliente + " conectado correctamente");
 
+            boolean salir = false;
+
             while(!salir){
-                String mensaje = in.readUTF();
+                String mensaje = in.readUTF(); // <-- aquí saltará EOFException/SocketException si se cierra abrupto
                 log("- " + idCliente + ": " + mensaje);
 
                 if (mensaje.equalsIgnoreCase("FIN")) {
@@ -46,11 +44,15 @@ public class GestorCliente implements Runnable {
                 }
             }
 
-            sc.close();
             log("Socket del cliente " + idCliente + " terminado");
 
+        } catch (EOFException | SocketException e) {
+            // ✅ FASE 4.2: desconexión brusca
+            log("El cliente se ha desconectado inesperadamente (" + idCliente + ")");
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            try { sc.close(); } catch (IOException ignored) {}
         }
     }
 }

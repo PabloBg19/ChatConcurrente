@@ -9,44 +9,37 @@ import java.net.Socket;
 public class Server {
     public static void main(String[] args) {
 
-        ServerSocket servidor = null; // Declaración del servidor
-        Socket sc = null; // Declaración del socket
-
-        DataInputStream in = null;
-        DataOutputStream out = null;
-        // creacion constante, se le pone en mayusuculas para indicar que es una constante
         final int PUERTO = 5000;
 
-        try{
-            servidor = new ServerSocket(PUERTO); // Creación del servidor en el puerto 5000
-            System.out.println("servidor a la espera..."); // Mensaje de inicio del servidor
+        try (ServerSocket servidor = new ServerSocket(PUERTO)) {
+            System.out.println("Servidor a la espera...");
 
-            while(true){
-                sc = servidor.accept(); // Acepta conexiones entrantes, en este punto el servidor se queda esperando
+            Socket sc = servidor.accept();
+            System.out.println("Cliente conectado correctamente");
 
-                System.out.println("Cliente conectado correctamente" ); // Mensaje de conexión exitosa
-
-                in = new DataInputStream(sc.getInputStream()); // Flujo de entrada
-                out = new DataOutputStream(sc.getOutputStream()); // Flujo de salida
-
+            try (
+                    DataInputStream in = new DataInputStream(sc.getInputStream());
+                    DataOutputStream out = new DataOutputStream(sc.getOutputStream())
+            ) {
                 boolean salir = false;
 
-                while(!salir){
-                    String mensaje = in.readUTF(); // Lee el mensaje enviado por el cliente
-                    System.out.println("Mensaje recibido del cliente: " + mensaje); // Muestra el mensaje
+                while (!salir) {
+                    String mensaje = in.readUTF();
+                    System.out.println("Cliente: " + mensaje);
 
                     if (mensaje.equalsIgnoreCase("FIN")) {
                         salir = true;
-                    }else{
-                        out.writeUTF("Mensaje recibido: " + mensaje); // Envía un mensaje al cliente
+                    } else {
+                        out.writeUTF("Mensaje recibido: " + mensaje);
                     }
                 }
-
-                sc.close();
-                System.out.println("Socket terminado"); // Mensaje de desconexión
             }
+
+            sc.close();
+            System.out.println("Servidor cerrado");
+
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

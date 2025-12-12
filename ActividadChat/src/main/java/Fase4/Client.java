@@ -1,4 +1,4 @@
-package Fase3;
+package Fase4;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -23,9 +23,9 @@ public class Client {
 
             Scanner teclado = new Scanner(System.in);
 
-            // 🔹 PEDIR NOMBRE EN EL CLIENTE
+            //  PEDIR NOMBRE EN EL CLIENTE
             String nombre = cogerNombre();
-            out.writeUTF(nombre); // 🔹 se envía al servidor
+            out.writeUTF(nombre); //  se envía al servidor
 
             System.out.println("Conectado al servidor.");
             boolean salir = false;
