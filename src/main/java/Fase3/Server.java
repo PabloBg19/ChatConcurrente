@@ -27,8 +27,8 @@ public class Server {
                 t.start();
             }
 
-        }catch (IOException e){
-            throw new RuntimeException(e);
+        }catch (IOException e) {
+            System.out.println("Cliente desconectado inesperadamente");
         }
     }
 }

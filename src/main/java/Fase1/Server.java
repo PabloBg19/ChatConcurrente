@@ -48,7 +48,7 @@ public class Server {
                 System.out.println("Socket terminado"); // Mensaje de desconexión
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Cliente desconectado inesperadamente");
         }
     }
 }

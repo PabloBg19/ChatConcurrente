@@ -50,8 +50,7 @@ public class Server {
             System.out.println("Servidor cerrado");
 
         } catch (IOException e) {
-            // Manejo de errores de entrada/salida
-            e.printStackTrace();
+            System.out.println("Cliente desconectado inesperadamente");
         }
     }
 }
