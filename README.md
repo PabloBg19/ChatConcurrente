@@ -116,7 +116,7 @@ El `main` queda reducido a:
 
 👉 El servidor **nunca se bloquea**
 
-### 📸 Capturas de Pantalla (obligatorias en la memoria)
+### 📸 Capturas de Pantalla 
 
 > ![gifResultado](gif.gif)
 
@@ -153,7 +153,7 @@ El cliente se ha desconectado inesperadamente
 
 La memoria entregada en PDF incluye:
 
-- 👥 Nombres de los integrantes
+- 👥 Creado por: Pablo Belascoain, Miguel Ángel Perez
 - 🧠 Análisis de la Fase 1 (bloqueo)
 - 📸 Capturas demostrando concurrencia real
 - 📊 Explicación técnica del funcionamiento
