@@ -51,7 +51,6 @@ ChatConcurrente/
 │       └── Client.java          # Cliente del chat
 │
 ├── README.md
-└── memoria.pdf (entrega académica)
 ```
 
 ---
@@ -119,11 +118,7 @@ El `main` queda reducido a:
 
 ### 📸 Capturas de Pantalla (obligatorias en la memoria)
 
-> 📷 **Aquí insertar capturas**
->
-> - Consola del servidor
-> - Cliente 1 enviando mensajes
-> - Cliente 2 conectado simultáneamente
+> ![gifResultado](gif.gif)
 
 ---
 
