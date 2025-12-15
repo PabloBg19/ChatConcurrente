@@ -118,7 +118,7 @@ El `main` queda reducido a:
 
 ### 📸 Capturas de Pantalla 
 
-> ![gifResultado](gif.gif)
+> ![gifResultado](gif1.gif)
 
 ---
 
