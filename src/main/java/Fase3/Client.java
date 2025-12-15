@@ -39,12 +39,30 @@ public class Client {
 
             // Mensaje de confirmación de conexión
             System.out.println("Conectado al servidor.");
+
+            // ✅ HILO RECEPTOR:
+            // Este hilo está SIEMPRE leyendo lo que manda el servidor,
+            // así el cliente ve cuando otros entran y salen, aunque él no escriba.
+            DataInputStream finalIn = in;
+            Thread receptor = new Thread(() -> {
+                try {
+                    while (true) {
+                        String msg = finalIn.readUTF();
+                        System.out.println("\n" + msg);
+                        System.out.print("> ");
+                    }
+                } catch (IOException e) {
+                    System.out.println("\nConexión cerrada.");
+                }
+            });
+            receptor.setDaemon(true); // si el main termina, este hilo no bloquea el cierre
+            receptor.start();
+
             boolean salir = false;
 
             // Bucle principal de comunicación con el servidor
             while (!salir) {
-                // Solicita un mensaje al usuario
-                System.out.println("Escribe un mensaje para el servidor (escribe 'FIN' para salir): ");
+                System.out.print("> ");
                 String mensajeEnviar = teclado.nextLine();
 
                 // Envía el mensaje al servidor
@@ -52,11 +70,7 @@ public class Client {
 
                 // Si el usuario escribe "FIN", se termina la comunicación
                 if (mensajeEnviar.equalsIgnoreCase("FIN")) {
-                    salir = true; // Sale sin esperar respuesta
-                } else {
-                    // Recibe la respuesta del servidor
-                    String mensajeRecibido = in.readUTF();
-                    System.out.println("Mensaje recibido del servidor: " + mensajeRecibido);
+                    salir = true;
                 }
             }
 
