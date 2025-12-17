@@ -62,7 +62,7 @@ public class GestorCliente implements Runnable {
             log("Cliente " + idCliente + " conectado correctamente");
 
             //  Aviso a TODOS los clientes de que este ha ENTRADO
-            Server.broadcast("🔔 " + nombreCliente + " ha entrado al chat");
+            Server.broadcast( nombreCliente + " ha entrado al chat");
 
             // Bucle principal de comunicación con el cliente
             while(!salir){
@@ -86,7 +86,7 @@ public class GestorCliente implements Runnable {
 
             //  Aviso a TODOS los clientes de que este ha SALIDO
             if (nombreCliente != null) {
-                Server.broadcast("🚪 " + nombreCliente + " ha salido del chat");
+                Server.broadcast( nombreCliente + " ha salido del chat");
             }
 
             //
