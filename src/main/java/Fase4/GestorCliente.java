@@ -32,7 +32,7 @@ public class GestorCliente implements Runnable {
         try (DataInputStream in = new DataInputStream(sc.getInputStream());
              DataOutputStream out = new DataOutputStream(sc.getOutputStream())) {
 
-            // 🔹 1) Recibir el nombre del cliente nada más conectarse
+            // Recibir el nombre del cliente nada más conectarse
             String nombreCliente = in.readUTF();
             this.idCliente = nombreCliente + " - ";
 
@@ -41,7 +41,7 @@ public class GestorCliente implements Runnable {
 
             boolean salir = false;
 
-            // 🔹 2) Bucle principal: leer mensajes hasta "FIN" o desconexión
+            // Bucle principal: leer mensajes hasta "FIN" o desconexión
             while(!salir){
 
                 // Lee el mensaje del cliente

@@ -10,6 +10,7 @@ public class Server {
 
     //  Lista de clientes conectados (thread-safe)
     // Guardamos los gestores para poder enviar mensajes a todos
+    // usamos un Set para evitar duplicados y ConcurrentHashMap para seguridad en hilos
     public static final Set<GestorCliente> clientes = ConcurrentHashMap.newKeySet();
 
     //  Envía un mensaje a TODOS los clientes conectados
