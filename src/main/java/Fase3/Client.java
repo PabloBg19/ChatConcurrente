@@ -32,15 +32,15 @@ public class Client {
             // Scanner para leer datos del teclado
             Scanner teclado = new Scanner(System.in);
 
-            // 🔹 Se solicita el nombre del usuario
+            //  Se solicita el nombre del usuario
             String nombre = cogerNombre();
-            // 🔹 Se envía el nombre al servidor nada más conectarse
+            //  Se envía el nombre al servidor nada más conectarse
             out.writeUTF(nombre);
 
             // Mensaje de confirmación de conexión
             System.out.println("Conectado al servidor.");
 
-            // ✅ HILO RECEPTOR:
+            //  HILO RECEPTOR:
             // Este hilo está SIEMPRE leyendo lo que manda el servidor,
             // así el cliente ve cuando otros entran y salen, aunque él no escriba.
             DataInputStream finalIn = in;

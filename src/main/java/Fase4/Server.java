@@ -21,7 +21,7 @@ public class Server {
                 // El servidor queda bloqueado hasta que entra un cliente
                 Socket sc = server.accept();
 
-                // 🔹 FASE 4.1: identificación del cliente por IP
+                //  FASE 4.1: identificación del cliente por IP
                 System.out.println(
                         "Cliente conectado desde: " +
                                 sc.getInetAddress().getHostAddress()

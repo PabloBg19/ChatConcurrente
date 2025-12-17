@@ -20,10 +20,10 @@ public class GestorCliente implements Runnable {
     // Identificador del cliente (nombre + separador)
     private String idCliente;
 
-    // ✅ Nombre para avisos de entrada/salida
+    //  Nombre para avisos de entrada/salida
     private String nombreCliente;
 
-    // ✅ salida guardada para poder enviar mensajes desde el Server.broadcast()
+    //  salida guardada para poder enviar mensajes desde el Server.broadcast()
     private DataOutputStream out;
 
     // Constructor que recibe el socket del cliente
@@ -31,7 +31,7 @@ public class GestorCliente implements Runnable {
         this.sc = sc;
     }
 
-    // ✅ Método para enviar mensajes a ESTE cliente (lo usa Server.broadcast)
+    //  Método para enviar mensajes a ESTE cliente (lo usa Server.broadcast)
     public void enviar(String msg) {
         try {
             if (out != null) out.writeUTF(msg);
@@ -61,7 +61,7 @@ public class GestorCliente implements Runnable {
             // Mensaje de conexión del cliente
             log("Cliente " + idCliente + " conectado correctamente");
 
-            // ✅ Aviso a TODOS los clientes de que este ha ENTRADO
+            //  Aviso a TODOS los clientes de que este ha ENTRADO
             Server.broadcast("🔔 " + nombreCliente + " ha entrado al chat");
 
             // Bucle principal de comunicación con el cliente
@@ -74,7 +74,7 @@ public class GestorCliente implements Runnable {
                 if (mensaje.equalsIgnoreCase("FIN")) {
                     salir = true;
                 } else {
-                    // ✅ (opcional) si quieres que el mensaje lo vean todos, lo mandamos a todos:
+
                     // Si NO quieres chat general, cambia esto por out.writeUTF(...) como lo tenías
                     Server.broadcast(idCliente + mensaje);
                 }
@@ -84,12 +84,13 @@ public class GestorCliente implements Runnable {
             log("Cliente desconectado inesperadamente: " + (nombreCliente != null ? nombreCliente : "desconocido"));
         } finally {
 
-            // ✅ Aviso a TODOS los clientes de que este ha SALIDO
+            //  Aviso a TODOS los clientes de que este ha SALIDO
             if (nombreCliente != null) {
                 Server.broadcast("🚪 " + nombreCliente + " ha salido del chat");
             }
 
-            // ✅ Quitamos el cliente de la lista
+            //
+            // Quitamos el cliente de la lista
             Server.clientes.remove(this);
 
             // Se cierra el socket del cliente

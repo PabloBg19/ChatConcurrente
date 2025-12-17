@@ -32,9 +32,9 @@ public class Client {
             // Scanner para leer datos del teclado
             Scanner teclado = new Scanner(System.in);
 
-            // 🔹 Se pide el nombre del cliente
+            //  Se pide el nombre del cliente
             String nombre = cogerNombre();
-            // 🔹 Se envía el nombre al servidor al iniciar la conexión
+            //  Se envía el nombre al servidor al iniciar la conexión
             out.writeUTF(nombre);
 
             // Mensaje de confirmación de conexión
@@ -52,7 +52,7 @@ public class Client {
 
                 // Si el usuario escribe "FIN", se termina la comunicación
                 if (mensajeEnviar.equalsIgnoreCase("FIN")) {
-                    salir = true; // ✅ sale sin esperar respuesta
+                    salir = true; //  sale sin esperar respuesta
                 } else {
                     // Recibe la respuesta del servidor
                     String mensajeRecibido = in.readUTF();
